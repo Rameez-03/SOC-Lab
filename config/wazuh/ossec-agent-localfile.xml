@@ -1,0 +1,22 @@
+<!-- Log collection blocks added to ossec.conf on Windows 10 agent -->
+<!-- Location: C:\Program Files (x86)\ossec-agent\ossec.conf -->
+
+<localfile>
+  <location>Application</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+
+<localfile>
+  <location>Security</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+
+<localfile>
+  <location>System</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+
+<localfile>
+  <location>Microsoft-Windows-Sysmon/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
