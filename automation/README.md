@@ -17,8 +17,17 @@ python automation/start_lab.py
 
 **Requirements:** Python 3, VirtualBox installed at default path.
 
+## stop_lab.py
+
+Gracefully shuts down all VMs in reverse order (Windows → Kali → Ubuntu).
+
+```powershell
+python automation/stop_lab.py
+```
+
+Sends ACPI shutdown signal to each VM and waits for it to power off before moving to the next. Falls back to force-off if a VM doesn't respond within 60 seconds.
+
 ## Planned
 
-- `stop_lab.py` — graceful shutdown of all VMs
 - `snapshot.py` — take snapshots before attack scenarios
 - `reset_windows.py` — restore Windows 10 to clean snapshot post-attack

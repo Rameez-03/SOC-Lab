@@ -30,16 +30,19 @@ def start_vm(name, headless=False):
 
 
 def main():
-    print("[1/3] Starting Ubuntu (headless)...")
+    print("[1/4] Starting Ubuntu (headless)...")
     start_vm(VMS["ubuntu"], headless=True)
 
-    print("[2/3] Giving Wazuh 90s to initialise...")
+    print("[2/4] Giving Wazuh 90s to initialise...")
     for i in range(90, 0, -10):
         print(f"  {i}s remaining...", end="\r")
         time.sleep(10)
     print("  Done.              ")
 
-    print("[3/3] Starting Kali...")
+    print("[3/4] Starting Windows 10...")
+    start_vm(VMS["windows"], headless=False)
+
+    print("[4/4] Starting Kali...")
     start_vm(VMS["kali"], headless=False)
 
     print("\nLab is up.")
