@@ -22,34 +22,35 @@ def vm_state(name):
 def shutdown_vm(name):
     state = vm_state(name)
     if state != "running":
-        print(f"  {name} is not running, skipping.")
-        return
+        print(f"  {name} already off, skipping.")
+        return False
     print(f"  Sending shutdown to {name}...")
     subprocess.run([VBOXMANAGE, "controlvm", name, "acpipowerbutton"])
+    return True
 
-def wait_for_off(name, timeout=60):
+def wait_for_all(names, timeout=60):
+    pending = set(names)
     start = time.time()
-    while time.time() - start < timeout:
-        if vm_state(name) in ("poweroff", "saved", "aborted"):
-            print(f"  {name} is off.")
-            return True
-        time.sleep(3)
-    print(f"  {name} did not shut down in time — forcing off.")
-    subprocess.run([VBOXMANAGE, "controlvm", name, "poweroff"])
-    return False
+    while pending:
+        if time.time() - start > timeout:
+            for name in pending:
+                print(f"  {name} timed out — forcing off.")
+                subprocess.run([VBOXMANAGE, "controlvm", name, "poweroff"])
+            break
+        for name in list(pending):
+            if vm_state(name) in ("poweroff", "saved", "aborted"):
+                print(f"  {name} is off.")
+                pending.remove(name)
+        if pending:
+            time.sleep(2)
 
 def main():
-    print("[1/3] Shutting down Windows...")
-    shutdown_vm(VMS["windows"])
-    wait_for_off(VMS["windows"])
+    print("Sending shutdown to all VMs...")
+    targets = [name for name in VMS.values() if shutdown_vm(name)]
 
-    print("[2/3] Shutting down Kali...")
-    shutdown_vm(VMS["kali"])
-    wait_for_off(VMS["kali"])
-
-    print("[3/3] Shutting down Ubuntu (Wazuh)...")
-    shutdown_vm(VMS["ubuntu"])
-    wait_for_off(VMS["ubuntu"])
+    if targets:
+        print("\nWaiting for VMs to power off...")
+        wait_for_all(targets)
 
     print("\nLab is down.")
 
