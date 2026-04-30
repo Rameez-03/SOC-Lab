@@ -5,7 +5,8 @@
      100200-100299 : Credential Access
      100300-100399 : Discovery
      100400-100499 : Defense Evasion
-     100500-100599 : C2 / Network
+     100500-100599 : Lateral Movement / Brute Force
+     100600-100699 : Correlation chains (multi-event)
 -->
 
 <!-- ===================== EXECUTION ===================== -->
@@ -116,6 +117,18 @@
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(bypass|hidden|noprofile|noninteractive|ExecutionPolicy Bypass)</field>
     <description>Defense Evasion: PowerShell evasion flags - $(win.eventdata.commandLine)</description>
     <mitre><id>T1059.001</id></mitre>
+  </rule>
+
+</group>
+
+<!-- ===================== LATERAL MOVEMENT / BRUTE FORCE ===================== -->
+<group name="windows,authentication,brute_force,">
+
+  <rule id="100500" level="14" frequency="10" timeframe="60">
+    <if_matched_sid>60122</if_matched_sid>
+    <same_field>win.eventdata.ipAddress</same_field>
+    <description>Brute Force: 10+ failed logons from $(win.eventdata.ipAddress) in 60s</description>
+    <mitre><id>T1110.001</id></mitre>
   </rule>
 
 </group>
