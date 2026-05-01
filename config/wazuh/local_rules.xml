@@ -132,3 +132,15 @@
   </rule>
 
 </group>
+
+<!-- ===================== CORRELATION CHAINS ===================== -->
+<group name="windows,discovery,correlation,">
+
+  <rule id="100600" level="12" frequency="3" timeframe="60">
+    <if_matched_sid>100300</if_matched_sid>
+    <same_field>win.eventdata.user</same_field>
+    <description>Reconnaissance Chains: 3+ Discovery Commands $(win.eventdata.user) in 60s</description>
+    <mitre><id>T1082</id><id>T1033</id></mitre>
+  </rule>
+
+</group>
