@@ -144,3 +144,14 @@
   </rule>
 
 </group>
+
+<group name="windows,persistence,correlation,">
+
+  <rule id="100601" level="14" frequency="2" timeframe="120">
+    <if_matched_group>persistence</if_matched_group>
+    <same_field>win.eventdata.user</same_field>
+    <description>Persistence Chains: 2+ Persistence Commands $(win.eventdata.user) in 120s</description>
+    <mitre><id>T1053.005</id><id>T1547.001</id></mitre>
+  </rule>
+
+</group>

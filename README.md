@@ -53,8 +53,8 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 |---|---|---|
 | 1 | Infrastructure — Wazuh + agent + Sysmon | ✅ Complete |
 | 2 | Normalisation — custom detection rules | ✅ Complete |
-| 3 | Correlation — multi-event attack chains | 🔜 Next |
-| 4 | Aggregation — noise reduction | ⬜ Planned |
+| 3 | Correlation — multi-event attack chains | ✅ Complete |
+| 4 | Aggregation — noise reduction | 🔜 Next |
 | 5 | Reporting — attack scenario dashboards | ⬜ Planned |
 | 6 | SOAR — TheHive + Shuffle integration | ⬜ Planned |
 
@@ -197,6 +197,62 @@ Discovery: Recon command executed - C:\Windows\System32\whoami.exe  [rule:100300
 Discovery: Recon command executed - C:\Windows\System32\net.exe     [rule:100300, level:6]
 Discovery: Recon command executed - C:\Windows\System32\net1.exe    [rule:100300, level:6]
 ```
+
+---
+
+## Phase 3 — Correlation
+
+See [docs/phase3-correlation.md](docs/phase3-correlation.md) for the full breakdown.
+
+### How correlation works
+
+Phase 2 rules fire on individual events. Phase 3 rules fire on **patterns** — bursts and chains of events that individually look benign but together signal an attack in progress.
+
+Wazuh frequency rules count how many times a parent rule fires within a time window. When the threshold is hit, a single high-severity correlation alert fires.
+
+Key elements:
+- `frequency` + `timeframe` — N hits within T seconds
+- `if_matched_sid` — chain off one specific rule
+- `if_matched_group` — chain off any rule in a named group (catches technique combinations)
+- `same_field` — scope the count to one attacker or user, preventing false positives
+
+### Correlation rules written
+
+| Rule | Level | Detects | MITRE |
+|---|---|---|---|
+| 100500 | 14 | 10+ failed logons from same IP in 60s | T1110.001 |
+| 100600 | 12 | 3+ recon commands by same user in 60s | T1082, T1033 |
+| 100601 | 14 | 2+ persistence techniques by same user in 120s | T1053.005, T1547.001 |
+
+### Full kill chain test
+
+All three chains confirmed firing in a single session:
+
+```
+Brute Force  →  Kali (Metasploit smb_login) → Windows 10:445    → rule 100500 [level 14]
+Recon        →  whoami, ipconfig, net user, systeminfo            → rule 100600 [level 12]
+Persistence  →  schtasks /create + reg add Run key               → rule 100601 [level 14]
+```
+
+### Screenshots
+
+**Metasploit brute force running**
+![Brute Force](assets/BruteForce.png)
+
+**4625 events flowing into Wazuh**
+![Metasploit Alert](assets/MetasploitAlert.png)
+
+**Rule 100500 — Brute Force correlation firing**
+![Correlation Rule Trigger](assets/CorrelationRuleTrigger.png)
+
+**Rule 100600 — Recon chain firing**
+![Recon Alert](assets/ReconAlert.png)
+
+**Persistence commands on Windows 10**
+![Persistence Attack](assets/PersistenceAttack.png)
+
+**Rule 100601 — Persistence chain firing**
+![Persistence Alert](assets/PersistenceAlert.png)
 
 ---
 
