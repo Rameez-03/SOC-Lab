@@ -54,8 +54,8 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 | 1 | Infrastructure — Wazuh + agent + Sysmon | ✅ Complete |
 | 2 | Normalisation — custom detection rules | ✅ Complete |
 | 3 | Correlation — multi-event attack chains | ✅ Complete |
-| 4 | Aggregation — noise reduction | 🔜 Next |
-| 5 | Reporting — attack scenario dashboards | ⬜ Planned |
+| 4 | Aggregation — noise reduction | ✅ Complete |
+| 5 | Reporting — attack scenario dashboards | 🔜 Next |
 | 6 | SOAR — TheHive + Shuffle integration | ⬜ Planned |
 
 ---

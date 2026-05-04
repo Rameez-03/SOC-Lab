@@ -155,3 +155,41 @@
   </rule>
 
 </group>
+
+<!-- ===================== SUPPRESSIONS / TUNING ===================== -->
+<group name="windows,tuning,">
+
+  <rule id="100700" level="0">
+    <if_sid>92213</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(cleanmgr|OneDrivePatcher)\.exe</field>
+    <description>Suppressed: Known-good process dropping temp file - $(win.eventdata.image)</description>
+    <options>no_log</options>
+  </rule>
+
+  <rule id="100701" level="0">
+    <if_sid>2902</if_sid>
+    <description>Suppressed: Ubuntu dpkg package installed</description>
+    <options>no_log</options>
+  </rule>
+
+  <rule id="100702" level="0">
+    <if_sid>2904</if_sid>
+    <description>Suppressed: Ubuntu dpkg package half-configured</description>
+    <options>no_log</options>
+  </rule>
+
+  <rule id="100703" level="0">
+    <if_sid>92219</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)svchost\.exe</field>
+    <description>Suppressed: svchost.exe DLL activity in Windows root - known-good</description>
+    <options>no_log</options>
+  </rule>
+
+  <rule id="100704" level="0">
+    <if_sid>100301</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)OneDrive</field>
+    <description>Suppressed: OneDrive outbound connection - known-good</description>
+    <options>no_log</options>
+  </rule>
+
+</group>
