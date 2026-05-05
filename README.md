@@ -317,10 +317,10 @@ See [docs/phase5-reporting.md](docs/phase5-reporting.md) for the full breakdown.
 ### Screenshots
 
 **Attack Overview Dashboard**
-![Attack Overview](assets/dashboard.png)
+![Attack Overview](assets/Dashboard.png)
 
 **Security Posture Dashboard**
-![Security Posture](assets/dashboard2.png)
+![Security Posture](assets/Dashboard2.png)
 
 ### Key findings from the data
 - **324 total alerts** over the lab period with **12 correlation rule hits**
