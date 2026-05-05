@@ -55,8 +55,8 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 | 2 | Normalisation — custom detection rules | ✅ Complete |
 | 3 | Correlation — multi-event attack chains | ✅ Complete |
 | 4 | Aggregation — noise reduction | ✅ Complete |
-| 5 | Reporting — attack scenario dashboards | 🔜 Next |
-| 6 | SOAR — TheHive + Shuffle integration | ⬜ Planned |
+| 5 | Reporting — attack scenario dashboards | ✅ Complete |
+| 6 | SOAR — TheHive + Shuffle integration | 🔜 Next |
 
 ---
 
@@ -301,6 +301,32 @@ Rule 100704 fixed a false positive in our own Phase 2 rule — 100301 was correc
 - **Rule 23505** — 229 high severity CVEs on Windows 10 — real vulnerability data for Phase 5 dashboards
 - **Rule 19007** — SCA compliance failures — real security posture data
 - **Rule 60122** — Logon failures — expected from brute force simulations
+
+---
+
+## Phase 5 — Reporting
+
+See [docs/phase5-reporting.md](docs/phase5-reporting.md) for the full breakdown.
+
+### Dashboards built
+
+**Attack Overview** — alert timeline by severity, MITRE tactics distribution, total alerts, correlation rules fired, top rules by count
+
+**Security Posture** — active CVEs on Windows 10, total CVE count, top SCA compliance failures, SCA pass/fail distribution
+
+### Screenshots
+
+**Attack Overview Dashboard**
+![Attack Overview](assets/dashboard.png)
+
+**Security Posture Dashboard**
+![Security Posture](assets/dashboard2.png)
+
+### Key findings from the data
+- **324 total alerts** over the lab period with **12 correlation rule hits**
+- **457 high severity CVEs** on unpatched Windows 10 — all CVE-2025-* series
+- **420 SCA compliance failures** — primarily SSH configuration gaps on the Ubuntu manager
+- Defense Evasion is the dominant MITRE tactic across all lab activity
 
 ---
 
