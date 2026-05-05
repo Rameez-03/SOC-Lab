@@ -34,6 +34,18 @@ This searches every archived log file, not just the current one. The full 7-day 
 | 112 | 92213 | Executable dropped in Temp folder — **level 15** |
 | 46 | 100301 | Outbound connection to attack port (our rule) |
 
+**Full rule count output across all logs**
+![Noisy Alert Count](../assets/NoisyAlert.png)
+
+**Identifying what each noisy rule is**
+![Noisy Rules](../assets/NoisyRules.png)
+
+**Rules 2902 and 2904 — dpkg package manager events**
+![Noisy Rules 2](../assets/NoisyRules2.png)
+
+**Rules 23505, 92219, 19007 — vulnerability scanner, Sysmon, SCA**
+![Noisy Rules 3](../assets/NoisyRules3.png)
+
 ### Step 2 — Investigate before suppressing
 
 Not every high-volume rule is noise. Before suppressing, identify what's actually triggering it:
@@ -68,6 +80,9 @@ cleanmgr.exe → AppData\Local\Temp\{GUID}\UnattendProvider.dll   → rule 92213
 ```
 
 **The real-world impact:** An analyst seeing 112 critical alerts would either spend hours investigating Disk Cleanup runs, or — more likely — start ignoring level 15 alerts entirely. The second outcome is how real breaches get missed.
+
+**Identifying the offending process**
+![False Positive Investigation](../assets/FalsePositive.png)
 
 **The fix:** A surgical suppression rule targeting only the known-good processes, leaving any unknown process still firing at level 15.
 
@@ -148,6 +163,9 @@ All suppressions use `level="0"` + `<options>no_log</options>` — the alert is 
 
 This is a false positive we introduced — rule 100301 correctly detects outbound connections to common attack ports, but doesn't distinguish between a port scanner and OneDrive syncing to port 443.
 
+**OneDrive processes triggering rule 100301**
+![OneDrive False Positive](../assets/ODFalsePositive.png)
+
 **Approach:** CDB list of trusted processes + selective suppression rule.
 
 CDB list at `/var/ossec/etc/lists/trusted-outbound-processes`:
@@ -158,6 +176,12 @@ onedrive.sync.service.exe:
 onedrivestandaloneupdater.exe:
 onedrivepatcher.exe:
 ```
+
+**CDB list registered in ossec.conf**
+![Trusted Processes Config](../assets/TrustedProcesses.png)
+
+**CDB list contents**
+![Trusted Processes List](../assets/TrustedProcessesList.png)
 
 Suppression rule:
 ```xml

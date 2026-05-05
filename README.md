@@ -256,6 +256,54 @@ Persistence  →  schtasks /create + reg add Run key               → rule 1006
 
 ---
 
+## Phase 4 — Aggregation
+
+See [docs/phase4-aggregation.md](docs/phase4-aggregation.md) for the full breakdown.
+
+### How aggregation works
+
+Aggregation cuts alert volume so analysts only see what is actionable. The approach is to identify the highest-volume rules, investigate what's actually triggering them, and suppress known-good activity — surgically, not with blanket silencing.
+
+The core technique: `level="0"` + `<options>no_log</options>` — the alert is completely discarded before it reaches the dashboard or logs.
+
+### Key finding — alert fatigue from level 15 false positive
+
+Rule 92213 ("Executable file dropped in folder commonly used by malware") fired **112 times at level 15 (critical)**. Every single hit came from `cleanmgr.exe` — Windows Disk Cleanup extracts 20+ DLLs into Temp each run, each triggering a separate critical alert. An analyst investigating these would waste hours on Disk Cleanup, or start ignoring level 15 alerts entirely.
+
+### Suppression rules written
+
+| Rule | Suppresses | Type |
+|---|---|---|
+| 100700 | cleanmgr.exe / OneDrivePatcher.exe dropping in Temp (rule 92213) | Selective |
+| 100701 | All Ubuntu dpkg package installs (rule 2902) | Blanket |
+| 100702 | All Ubuntu dpkg half-configured events (rule 2904) | Blanket |
+| 100703 | svchost.exe DLL activity in Windows root (rule 92219) | Selective |
+| 100704 | OneDrive outbound connections on common ports (rule 100301) | Selective |
+
+Rule 100704 fixed a false positive in our own Phase 2 rule — 100301 was correctly detecting outbound connections to attack ports, but firing on OneDrive syncing to port 443. Fixed with a CDB list of trusted processes at `/var/ossec/etc/lists/trusted-outbound-processes`.
+
+### Screenshots
+
+**Full alert count across all logs — identifying noise targets**
+![Noisy Alert Count](assets/NoisyAlert.png)
+
+**Identifying the offending processes behind level 15 false positive**
+![False Positive Investigation](assets/FalsePositive.png)
+
+**OneDrive processes causing false positives on rule 100301**
+![OneDrive False Positive](assets/ODFalsePositive.png)
+
+**CDB list of trusted outbound processes**
+![Trusted Processes List](assets/TrustedProcessesList.png)
+
+### What was kept (not noise)
+
+- **Rule 23505** — 229 high severity CVEs on Windows 10 — real vulnerability data for Phase 5 dashboards
+- **Rule 19007** — SCA compliance failures — real security posture data
+- **Rule 60122** — Logon failures — expected from brute force simulations
+
+---
+
 ## Tech Stack
 
 | Tool | Version | Purpose |
