@@ -6,7 +6,6 @@ VBOXMANAGE = r"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 VMS = {
     "ubuntu":  "Ubuntu 24.04 LTS",
     "kali":    "Kali",
-    "windows": "Windows",
 }
 
 def vm_state(name):
@@ -38,9 +37,6 @@ def main():
         print(f"  {i}s remaining...", end="\r")
         time.sleep(10)
     print("  Done.              ")
-
-    print("[3/4] Starting Windows 10...")
-    start_vm(VMS["windows"], headless=False)
 
     print("[4/4] Starting Kali...")
     start_vm(VMS["kali"], headless=False)
