@@ -10,8 +10,6 @@
 
 A local, hands-on Security Operations Centre lab built on VirtualBox. Built from the ground up — starting with raw log collection and working up through detection engineering, correlation, noise reduction, reporting, and full SOAR automation.
 
-Successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-Automation-Lab). This version is local-first and goes deep on Wazuh internals before layering automation on top.
-
 ---
 
 ## Architecture
@@ -48,13 +46,13 @@ Successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-Automation-La
 │                     Host: Windows 11 (MSI)                      │
 │                     32GB RAM, VirtualBox                        │
 │                                                                 │
-│   ┌──────────────────────┐      ┌──────────────────────┐       │
-│   │    Ubuntu 24.04      │      │     Kali Linux        │       │
-│   │  Wazuh + TheHive     │      │  Attacker / Analyst   │       │
-│   │  Cortex + Shuffle    │      │                       │       │
-│   │  192.168.56.10       │      │  192.168.56.20        │       │
-│   │  15GB RAM            │      │  6GB RAM              │       │
-│   └──────────┬───────────┘      └──────────┬────────────┘       │
+│   ┌──────────────────────┐      ┌──────────────────────┐        │
+│   │    Ubuntu 24.04      │      │     Kali Linux       │        │
+│   │  Wazuh + TheHive     │      │  Attacker / Analyst  │        │
+│   │  Cortex + Shuffle    │      │                      │        │
+│   │  192.168.56.10       │      │  192.168.56.20       │        │
+│   │  15GB RAM            │      │  6GB RAM             │        │
+│   └──────────┬───────────┘      └──────────┬───────────┘        │
 │              │                             │                    │
 │              └──────────────┬──────────────┘                    │
 │                             │  Host-Only Network                │
