@@ -1,4 +1,4 @@
-# SOC Lab V2
+# SOC Lab 
 
 ![Wazuh](https://img.shields.io/badge/Wazuh-4.14.5-blue?style=flat-square)
 ![TheHive](https://img.shields.io/badge/TheHive-5.2-orange?style=flat-square)
