@@ -1,7 +1,7 @@
 {
   "title": "$exec.title",
   "description": "$build_alert.message.description",
-  "severity": $build_alert.message.severity,
+  "severity": "$build_alert.message.severity",
   "type": "external",
   "source": "Wazuh",
   "sourceRef": "$exec.id",
