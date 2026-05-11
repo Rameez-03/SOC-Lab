@@ -56,7 +56,7 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 | 3 | Correlation — multi-event attack chains | ✅ Complete |
 | 4 | Aggregation — noise reduction | ✅ Complete |
 | 5 | Reporting — attack scenario dashboards | ✅ Complete |
-| 6 | SOAR — TheHive + Shuffle integration | 🔜 Next |
+| 6 | SOAR — Wazuh → Shuffle → TheHive + Cortex enrichment | ✅ Complete |
 
 ---
 
@@ -330,6 +330,61 @@ See [docs/phase5-reporting.md](docs/phase5-reporting.md) for the full breakdown.
 
 ---
 
+## Phase 6 — SOAR
+
+See [docs/phase6-soar.md](docs/phase6-soar.md) for the full breakdown.
+
+### What was built
+
+- Wazuh webhook integration forwards alerts to Shuffle in real time
+- Shuffle workflow filters noise (severity < 2 skipped), maps Wazuh severity (0–3) to TheHive severity (1–4), and creates enriched alerts in TheHive automatically
+- TheHive 5 SOCLab organisation with `analyst@soclab.local` as the Shuffle service account
+- Cortex 3 connected to TheHive with VirusTotal and Abuse_Finder analyzers running as Docker containers
+- Second victim endpoint added: Windows 11 laptop (MSI) with Wazuh agent
+
+### The pipeline
+
+```
+Wazuh (detect) → Shuffle (filter + enrich) → TheHive (triage) → Cortex (enrich observables)
+```
+
+### Screenshots
+
+**Shuffle workflow — Webhook 1 → Build Alert → TheHive 1**
+![SOAR Workflow](assets/Workflow2.png)
+
+**Shuffle receiving a live Wazuh alert**
+![Webhook Execution](assets/ShuffleWebhookAlert.png)
+
+**TheHive — first alerts arriving from Shuffle**
+![TheHive Alerts](assets/AnalystHiveAlert.png)
+
+**TheHive — enriched alerts with Rule tags and Critical severity**
+![Enriched Alerts](assets/HiveSevereAlert.png)
+
+**TheHive alert created — Shuffle returned 201**
+![TheHive Alert Created](assets/TheHiveAlert.png)
+
+**TheHive case — promoted from alert**
+![Case](assets/Case.png)
+
+**Observable with Cortex analyzers**
+![Case Analyser](assets/CaseAnalyser.png)
+
+**Analyzer results — VirusTotal 0/92 + Abuse_Finder contact**
+![Analyser Report](assets/AnalyserReport.png)
+
+**Cortex — SOC-Lab org with thehive service user**
+![Cortex User](assets/SOCCortexUser.png)
+
+**Cortex — Abuse_Finder and VirusTotal enabled**
+![Analysers](assets/Analysers.png)
+
+**TheHive — SOCLab org with analyst user**
+![TheHive User](assets/SOCHiveUser.png)
+
+---
+
 ## Tech Stack
 
 | Tool | Version | Purpose |
@@ -337,10 +392,14 @@ See [docs/phase5-reporting.md](docs/phase5-reporting.md) for the full breakdown.
 | Wazuh | 4.14.5 | SIEM — log collection, correlation, alerting |
 | Sysmon | Latest | Deep Windows telemetry |
 | SwiftOnSecurity Sysmon Config | Latest | Tuned Sysmon ruleset |
+| Shuffle | Latest | SOAR — automated alert routing |
+| TheHive | 5.2.x | Case management and analyst workspace |
+| Cortex | 3.1.x | Observable enrichment and analyzer engine |
 | VirtualBox | 7.x | Hypervisor |
 | Ubuntu | 24.04 LTS | Wazuh server OS |
 | Kali Linux | Latest | Attacker / analyst |
 | Windows 10 | Pro | Victim endpoint |
+| Windows 11 | Home (MSI laptop) | Second victim endpoint |
 
 ---
 
