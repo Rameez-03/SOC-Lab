@@ -13,26 +13,26 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 │                  Host: Windows 11                   │
 │                  32GB RAM, VirtualBox               │
 │                                                     │
-│  ┌─────────────────┐      ┌─────────────────┐      │
-│  │  Ubuntu 24.04   │      │   Kali Linux    │      │
-│  │  Wazuh Manager  │      │ Attacker/Analyst│      │
-│  │  192.168.56.10  │      │  192.168.56.20  │      │
-│  │  8GB RAM        │      │  6GB RAM        │      │
-│  └────────┬────────┘      └────────┬────────┘      │
+│  ┌─────────────────┐      ┌─────────────────┐       │
+│  │  Ubuntu 24.04   │      │   Kali Linux    │       │
+│  │  Wazuh Manager  │      │ Attacker/Analyst│       │
+│  │  192.168.56.10  │      │  192.168.56.20  │       │
+│  │  8GB RAM        │      │  6GB RAM        │       │
+│  └────────┬────────┘      └────────┬────────┘       │
 │           │                        │                │
 │           └──────────┬─────────────┘                │
-│                      │ Host-Only Network             │
+│                      │ Host-Only Network            │
 │              192.168.56.0/24                        │
 │                      │                              │
 │           ┌──────────┘                              │
 │           │                                         │
-│  ┌────────┴────────┐                               │
-│  │   Windows 10    │                               │
-│  │  Wazuh Agent   │                                │
-│  │    + Sysmon    │                                │
-│  │  192.168.56.30  │                               │
-│  │  4GB RAM        │                               │
-│  └─────────────────┘                               │
+│  ┌────────┴────────┐                                │
+│  │   Windows 10    │                                │
+│  │  Wazuh Agent   │                                 │
+│  │    + Sysmon    │                                 │
+│  │  192.168.56.30  │                                │
+│  │  4GB RAM        │                                │
+│  └─────────────────┘                                │
 └─────────────────────────────────────────────────────┘
 ```
 
