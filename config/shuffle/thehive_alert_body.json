@@ -1,0 +1,9 @@
+{
+  "title": "$exec.title",
+  "description": "$build_alert.message.description",
+  "severity": $build_alert.message.severity,
+  "type": "external",
+  "source": "Wazuh",
+  "sourceRef": "$exec.id",
+  "tags": ["Wazuh", "Rule-$exec.rule_id"]
+}
