@@ -28,8 +28,8 @@ This is the successor to [SOC-Automation-Lab](https://github.com/Rameez-03/SOC-A
 │           │                                         │
 │  ┌────────┴────────┐                                │
 │  │   Windows 10    │                                │
-│  │  Wazuh Agent   │                                 │
-│  │    + Sysmon    │                                 │
+│  │  Wazuh Agent    │                                │
+│  │    + Sysmon     │                                │
 │  │  192.168.56.30  │                                │
 │  │  4GB RAM        │                                │
 │  └─────────────────┘                                │
