@@ -15,33 +15,6 @@ A local, hands-on Security Operations Centre lab built on VirtualBox. Built from
 ## Architecture
 
 ```
-<<<<<<< Updated upstream
-┌─────────────────────────────────────────────────────┐
-│                  Host: Windows 11                   │
-│                  32GB RAM, VirtualBox               │
-│                                                     │
-│  ┌─────────────────┐      ┌─────────────────┐       │
-│  │  Ubuntu 24.04   │      │   Kali Linux    │       │
-│  │  Wazuh Manager  │      │ Attacker/Analyst│       │
-│  │  192.168.56.10  │      │  192.168.56.20  │       │
-│  │  8GB RAM        │      │  6GB RAM        │       │
-│  └────────┬────────┘      └────────┬────────┘       │
-│           │                        │                │
-│           └──────────┬─────────────┘                │
-│                      │ Host-Only Network            │
-│              192.168.56.0/24                        │
-│                      │                              │
-│           ┌──────────┘                              │
-│           │                                         │
-│  ┌────────┴────────┐                                │
-│  │   Windows 10    │                                │
-│  │  Wazuh Agent    │                                │
-│  │    + Sysmon     │                                │
-│  │  192.168.56.30  │                                │
-│  │  4GB RAM        │                                │
-│  └─────────────────┘                                │
-└─────────────────────────────────────────────────────┘
-=======
 ┌─────────────────────────────────────────────────────────────────┐
 │                     Host: Windows 11 (MSI)                      │
 │                     32GB RAM, VirtualBox                        │
@@ -67,7 +40,6 @@ A local, hands-on Security Operations Centre lab built on VirtualBox. Built from
               │     192.168.0.25              │
               │     Physical Machine          │
               └───────────────────────────────┘
->>>>>>> Stashed changes
 ```
 
 | Machine | Role | IP | RAM | Network |
