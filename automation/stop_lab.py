@@ -4,7 +4,6 @@ import time
 VBOXMANAGE = r"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 
 VMS = {
-    "windows": "Windows",
     "kali":    "Kali",
     "ubuntu":  "Ubuntu 24.04 LTS",
 }

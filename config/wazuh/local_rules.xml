@@ -192,4 +192,25 @@
     <options>no_log</options>
   </rule>
 
+  <!-- Win11 MSI agent: NT AUTHORITY\SYSTEM runs whoami/net/ipconfig legitimately
+       (e.g. SCM, WMI service queries, Group Policy application).
+       Suppressing here also prevents rule 100600 (frequency chain) from counting
+       these — the counter only increments when the parent rule resolves to level > 0. -->
+  <rule id="100705" level="0">
+    <if_sid>100300</if_sid>
+    <field name="win.eventdata.user" type="pcre2">(?i)(NT AUTHORITY\\SYSTEM|SYSTEM)</field>
+    <description>Suppressed: Discovery command by NT AUTHORITY\SYSTEM - system-initiated noise</description>
+    <options>no_log</options>
+  </rule>
+
+  <!-- Win11 MSI agent: Windows Update, TrustedInstaller, and WMI host legitimately
+       invoke PowerShell with -ExecutionPolicy Bypass / -WindowStyle Hidden.
+       Suppress only when the parent is a known trusted system process. -->
+  <rule id="100706" level="0">
+    <if_sid>100401</if_sid>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)(TrustedInstaller|svchost|WmiPrvSE|MsMpEng|SearchIndexer|wuauclt|UsoClient)\.exe</field>
+    <description>Suppressed: PowerShell evasion flags from trusted system parent - $(win.eventdata.parentImage)</description>
+    <options>no_log</options>
+  </rule>
+
 </group>

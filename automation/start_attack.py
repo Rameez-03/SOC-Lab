@@ -4,7 +4,7 @@ import time
 VBOXMANAGE = r"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 
 VMS = {
-    "ubuntu":  "Ubuntu 24.04 LTS",
+    "kali":    "Kali",
 }
 
 def vm_state(name):
@@ -28,18 +28,8 @@ def start_vm(name, headless=False):
 
 
 def main():
-    print("[1/2] Starting Ubuntu (headless)...")
-    start_vm(VMS["ubuntu"], headless=True)
-
-    print("[2/2] Giving Wazuh 300s to initialise...")
-    for i in range(300, 0, -10):
-        print(f"  {i}s remaining...", end="\r")
-        time.sleep(10)
-    print("  Done.              ")
-
-    print("\nLab is up.")
-    print("  Dashboard : https://192.168.56.10")
-    print("  User      : admin")
+    print("Starting Kali...")
+    start_vm(VMS["kali"], headless=False)
 
 if __name__ == "__main__":
     main()
