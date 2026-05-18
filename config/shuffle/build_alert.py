@@ -8,6 +8,7 @@ if severity_wazuh < 2:
 
 thehive_severity = severity_wazuh + 1
 
+title = "$exec.title"
 desc = "Rule: $exec.rule_id (Wazuh Severity: " + str(severity_wazuh) + ")\n\n$exec.title"
 
-print(json.dumps({"skip": False, "severity": thehive_severity, "description": desc}))
+print(json.dumps({"skip": False, "severity": thehive_severity, "title": title, "description": desc}))
